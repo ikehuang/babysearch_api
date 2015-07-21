@@ -762,7 +762,7 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 					}
 					
 					//$devices = Device::find("email = '{$this->_email}'");
-					$devices = Device::find(array($conditions, "columns" => "serial_number, status, type, name, photo, message, category, latitude, longitude, battery_status, expiry_date"));
+					$devices = Device::find(array($conditions, "columns" => "serial_number, status, type, name, photo, message, category, latitude, longitude, battery_status, expiry_date, open"));
 					
 					foreach ($devices as $device) {
 						$device_list[] = $device;
