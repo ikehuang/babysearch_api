@@ -296,6 +296,7 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 		$message = $this->_request->getPost('message');
 		$serial_number = strtoupper($this->_request->getPost('serial_number'));
 		//$expiry_date = "2015-12-30";
+		$open = strtolower($this->_request->getPost('open'));
 		
 		//for updating pet...
 		$pet_name = $this->_request->getPost('pet_name');
@@ -368,7 +369,7 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 				break;
 		}
 		
-		$device_message = array("serial_number" => $serial_number, "status" => $status, "type" => $type, "name" => $name, "photo" => $photo, "message" => $message);
+		$device_message = array("serial_number" => $serial_number, "status" => $status, "type" => $type, "name" => $name, "photo" => $photo, "message" => $message, "open" => $open);
 			
 		$response_data = array(
 				'status' => 'fail',
@@ -483,6 +484,7 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 				//$device->name = $name;
 				//$device->photo = $photo;
 				$device->message = $message;
+				$device->open = $open;
 				
 				//filter input category with system
 				//if(Category::count("name = '{strtolower($category)}'" == 0)) {
