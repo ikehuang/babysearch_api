@@ -231,21 +231,21 @@ class UserController extends \Phalcon\Mvc\Controller {
 	
 	public function updateAction(){
 		
-		$fullname = $this->_request->getPost('fullname');
-		$firstname = $this->_request->getPost('firstname');
-		$lastname = $this->_request->getPost('lastname');
-		$address = $this->_request->getPost('address');
-		$phone = $this->_request->getPost('phone');
-		$nickname = $this->_request->getPost('nickname');
-		$birthday = $this->_request->getPost('birthday');
-		$sex = $this->_request->getPost('sex');
-		$photo = $this->_request->getPost('photo');
+		$fullname = isset($this->_request->getPost('fullname'));
+		$firstname = isset($this->_request->getPost('firstname'));
+		$lastname = isset($this->_request->getPost('lastname'));
+		$address = isset($this->_request->getPost('address'));
+		$phone = isset($this->_request->getPost('phone'));
+		$nickname = isset($this->_request->getPost('nickname'));
+		$birthday = isset($this->_request->getPost('birthday'));
+		$sex = isset($this->_request->getPost('sex'));
+		$photo = isset($this->_request->getPost('photo'));
 		//$photo = "";
 		
-		$city = $this->_request->getPost('city');
-		$district = $this->_request->getPost('district');
-		$postal = $this->_request->getPost('postal');
-		$country = $this->_request->getPost('country');
+		$city = isset($this->_request->getPost('city'));
+		$district = isset($this->_request->getPost('district'));
+		$postal = isset($this->_request->getPost('postal'));
+		$country = isset($this->_request->getPost('country'));
 		
 		$user_info = array("fullname" => $fullname, "address" => $address, "phone" => $phone, "nickname" => $nickname,
 							"birthday" => $birthday , "sex" => $sex, "photo" => $photo);
@@ -282,20 +282,33 @@ class UserController extends \Phalcon\Mvc\Controller {
 				$user = User::findFirst("sso_id = '{$this->_sso_id}'");
 				//$user = User::findFirst("email = '{$this->_email}'");
 				
-				$user->fullname = $fullname;
-				$user->firstname = $firstname;
-				$user->lastname = $lastname;
-				$user->phone = $phone;
-				$user->address = $address;
-				$user->nickname = $nickname;
-				$user->birthday = $birthday;
-				$user->sex = $sex;
-				$user->photo = $photo;
+				if(!empty($fullname))
+					$user->fullname = $fullname;
+				if(!empty($firstname))
+					$user->firstname = $firstname;
+				if(!empty($lastname))
+					$user->lastname = $lastname;
+				if(!empty($phone))
+					$user->phone = $phone;
+				if(!empty($address))
+					$user->address = $address;
+				if(!empty($nickname))
+					$user->nickname = $nickname;
+				if(!empty($birthday))
+					$user->birthday = $birthday;
+				if(!empty($sex))
+					$user->sex = $sex;
+				if(!empty($photo))
+					$user->photo = $photo;
 				
-				$user->city = $city;
-				$user->district = $district;
-				$user->postal = $postal;
-				$user->country = $country;
+				if(!empty($city))
+					$user->city = $city;
+				if(!empty($district))
+					$user->district = $district;
+				if(!empty($postal))
+					$user->postal = $postal;
+				if(!empty($country))
+					$user->country = $country;
 				
 				//for uploading user photo
 				// Check if the user has uploaded files
@@ -310,15 +323,15 @@ class UserController extends \Phalcon\Mvc\Controller {
 						($upload->moveTo($path)) ? $isUploaded = true : $isUploaded = false;
 				
 						if($isUploaded) {
-						//	if(preg_match("/photo/",$upload->getKey())) {
+							if(preg_match("/photo/",$upload->getKey())) {
 				
 								//strip from input key(eg.photos.1) to get id
-							//	$newkey = preg_replace("/^photos./","",$upload->getKey());
+								$newkey = preg_replace("/^photos./","",$upload->getKey());
 				
 								$user->photo = "http://{$_SERVER['HTTP_HOST']}/".$path;
 								
 								$photo = $user->photo;
-							//}
+							}
 						}
 					}
 				}

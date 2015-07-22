@@ -196,9 +196,9 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 		
 		$serial_number = strtoupper($this->_request->getPost('serial_number'));
 		
-		$latitude = $this->_request->getPost('latitude');
-		$longitude = $this->_request->getPost('longitude');
-		$battery_status = $this->_request->getPost('battery_status');
+		$latitude = isset($this->_request->getPost('latitude'));
+		$longitude = isset($this->_request->getPost('longitude'));
+		$battery_status = isset($this->_request->getPost('battery_status'));
 		
 		$device_message = array("latitude" => $latitude, 'longitude' => $longitude, 'battery_status' => $battery_status);
 		
@@ -227,8 +227,11 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 				
 				$device = Device::findFirst("serial_number = '{$serial_number}'");
 				
-				$device->latitude = $latitude;
+				if(!empty($latitude))
+					$device->latitude = $latitude;
+				if(!empty($longitude))
 				$device->longitude = $longitude;
+				if(!empty($battery_status))
 				$device->battery_status = $battery_status;
 				
 				if($device->update() == false) {
@@ -287,64 +290,64 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 	}
 
 	public function updateAction(){
-		$category = $this->_request->getPost('category');
-		$status = strtolower($this->_request->getPost('status'));
+		$category = isset($this->_request->getPost('category'));
+		$status = isset(strtolower($this->_request->getPost('status')));
 		//$type = $this->_request->getPost('type');
-		$name = $this->_request->getPost('name');
+		$name = isset($this->_request->getPost('name'));
 		//$photo = $this->_request->getPost('photo');
 		$photo = "";
-		$message = $this->_request->getPost('message');
-		$serial_number = strtoupper($this->_request->getPost('serial_number'));
+		$message = isset($this->_request->getPost('message'));
+		$serial_number = isset(strtoupper($this->_request->getPost('serial_number')));
 		//$expiry_date = "2015-12-30";
-		$open = strtolower($this->_request->getPost('open'));
+		$open = isset(strtolower($this->_request->getPost('open')));
 		
 		//for updating pet...
-		$pet_name = $this->_request->getPost('pet_name');
-		$pet_sex = $this->_request->getPost('pet_sex');
-		$pet_birthday = $this->_request->getPost('pet_birthday');
-		$pet_height = $this->_request->getPost('pet_height');
-		$pet_weight = $this->_request->getPost('pet_weight');
-		$pet_temperament = $this->_request->getPost('pet_temperament');
-		$pet_talents = $this->_request->getPost('pet_talents');
-		$pet_description = $this->_request->getPost('pet_description');
-		$pet_chip_number = $this->_request->getPost('pet_chip_number');
-		$pet_desex = $this->_request->getPost('pet_desex');
-		$pet_vaccine_type = $this->_request->getPost('pet_vaccine_type');
-		$pet_bloodtype = $this->_request->getPost('pet_bloodtype');
-		$pet_bloodbank = $this->_request->getPost('pet_bloodbank');
-		$pet_disability = $this->_request->getPost('pet_disability');
-		$pet_insurance = $this->_request->getPost('pet_insurance');
-		$pet_hospital_name = $this->_request->getPost('pet_hospital_name');
-		$pet_hospital_phone = $this->_request->getPost('pet_hospital_phone');
-		$pet_hospital_address = $this->_request->getPost('pet_hospital_address');
-		$pet_hospital_city = $this->_request->getPost('pet_hospital_city');
-		$pet_hospital_district = $this->_request->getPost('pet_hospital_district');
-		$pet_hospital_postal = $this->_request->getPost('pet_hospital_postal');
-		$pet_hospital_country = $this->_request->getPost('pet_hospital_country');
+		$pet_name = isset($this->_request->getPost('pet_name'));
+		$pet_sex = isset($this->_request->getPost('pet_sex'));
+		$pet_birthday = isset($this->_request->getPost('pet_birthday'));
+		$pet_height = isset($this->_request->getPost('pet_height'));
+		$pet_weight = isset($this->_request->getPost('pet_weight'));
+		$pet_temperament = isset($this->_request->getPost('pet_temperament'));
+		$pet_talents = isset($this->_request->getPost('pet_talents'));
+		$pet_description = isset($this->_request->getPost('pet_description'));
+		$pet_chip_number = isset($this->_request->getPost('pet_chip_number'));
+		$pet_desex = isset($this->_request->getPost('pet_desex'));
+		$pet_vaccine_type = isset($this->_request->getPost('pet_vaccine_type'));
+		$pet_bloodtype = isset($this->_request->getPost('pet_bloodtype'));
+		$pet_bloodbank = isset($this->_request->getPost('pet_bloodbank'));
+		$pet_disability = isset($this->_request->getPost('pet_disability'));
+		$pet_insurance = isset($this->_request->getPost('pet_insurance'));
+		$pet_hospital_name = isset($this->_request->getPost('pet_hospital_name'));
+		$pet_hospital_phone = isset($this->_request->getPost('pet_hospital_phone'));
+		$pet_hospital_address = isset($this->_request->getPost('pet_hospital_address'));
+		$pet_hospital_city = isset($this->_request->getPost('pet_hospital_city'));
+		$pet_hospital_district = isset($this->_request->getPost('pet_hospital_district'));
+		$pet_hospital_postal = isset($this->_request->getPost('pet_hospital_postal'));
+		$pet_hospital_country = isset($this->_request->getPost('pet_hospital_country'));
 		
 		//for updating human...
-		$human_firstname = $this->_request->getPost('human_firstname');
-		$human_lastname = $this->_request->getPost('human_lastname');
-		$human_nickname = $this->_request->getPost('human_nickname');
-		$human_sex = $this->_request->getPost('human_sex');
-		$human_birthday = $this->_request->getPost('human_birthday');
-		$human_height = $this->_request->getPost('human_height');
-		$human_weight = $this->_request->getPost('human_weight');
-		$human_bloodtype = $this->_request->getPost('human_bloodtype');
-		$human_disease = $this->_request->getPost('human_disease');
-		$human_disability = $this->_request->getPost('human_disability');
-		$human_medications = $this->_request->getPost('human_medications');
-		$human_hospital_name = $this->_request->getPost('human_hospital_name');
-		$human_hospital_phone = $this->_request->getPost('human_hospital_phone');
-		$human_hospital_address = $this->_request->getPost('human_hospital_address');
-		$human_hospital_city = $this->_request->getPost('human_hospital_city');
-		$human_hospital_district = $this->_request->getPost('human_hospital_district');
-		$human_hospital_postal = $this->_request->getPost('human_hospital_postal');
-		$human_hospital_country = $this->_request->getPost('human_hospital_country');
+		$human_firstname = isset($this->_request->getPost('human_firstname'));
+		$human_lastname = isset($this->_request->getPost('human_lastname'));
+		$human_nickname = isset($this->_request->getPost('human_nickname'));
+		$human_sex = isset($this->_request->getPost('human_sex'));
+		$human_birthday = isset($this->_request->getPost('human_birthday'));
+		$human_height = isset($this->_request->getPost('human_height'));
+		$human_weight = isset($this->_request->getPost('human_weight'));
+		$human_bloodtype = isset($this->_request->getPost('human_bloodtype'));
+		$human_disease = isset($this->_request->getPost('human_disease'));
+		$human_disability = isset($this->_request->getPost('human_disability'));
+		$human_medications = isset($this->_request->getPost('human_medications'));
+		$human_hospital_name = isset($this->_request->getPost('human_hospital_name'));
+		$human_hospital_phone = isset($this->_request->getPost('human_hospital_phone'));
+		$human_hospital_address = isset($this->_request->getPost('human_hospital_address'));
+		$human_hospital_city = isset($this->_request->getPost('human_hospital_city'));
+		$human_hospital_district = isset($this->_request->getPost('human_hospital_district'));
+		$human_hospital_postal = isset($this->_request->getPost('human_hospital_postal'));
+		$human_hospital_country = isset($this->_request->getPost('human_hospital_country'));
 		
 		//for updating valuable...
-		$valuable_name = $this->_request->getPost('valuable_name');
-		$valuable_description = $this->_request->getPost('valuable_description');
+		$valuable_name = isset($this->_request->getPost('valuable_name'));
+		$valuable_description = isset($this->_request->getPost('valuable_description'));
 		
 		//find 'type'-P,M,T,A from first letter of serial number
 		$type = null;
@@ -447,16 +450,18 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 				
 				//category missing in device message?
 				
-				//filter status
-				switch($status) {
-					case "lost":
-						$device->status = $status;
-						break;
-					case "normal":
-						$device->status = $status;
-						break;
-					default:
-						break;
+				if(!empty($status)){
+					//filter status
+					switch($status) {
+						case "lost":
+							$device->status = $status;
+							break;
+						case "normal":
+							$device->status = $status;
+							break;
+						default:
+							break;
+					}
 				}
 				
 				//if device is lost, then switch ON the "open" flag to signal
@@ -466,31 +471,50 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 					//$device->open = 'N';
 				
 				//assign device name according to different types
-				switch($type) {
-					case "Pets":
-						$device->name = $pet_name;
-						break;
-					case "Human":
-						$device->name = $human_nickname;
-						break;
-					case "Valuables":
-						$device->name = $valuable_name;
-						break;
-					default:
-						break;
+				if(!empty($type)){
+					switch($type) {
+						case "Pets":
+							if(!empty($pet_name)){
+								$device->name = $pet_name;
+							}
+							break;
+						case "Human":
+							if(!empty($human_nickname)){
+								$device->name = $human_nickname;
+							}
+							break;
+						case "Valuables":
+							if(!empty($valuable_name)){
+								$device->name = $valuable_name;
+							}
+							break;
+						default:
+							break;
+					}
+				
+					$device->type = $type;
+				}
+
+				if(!empty($name)){
+					$device->name = $name;
+				}	
+					
+				//$device->photo = $photo;
+				if(!empty($message)){
+					$device->message = $message;
 				}
 				
-				$device->type = $type;
-				//$device->name = $name;
-				//$device->photo = $photo;
-				$device->message = $message;
-				$device->open = $open;
+				if(!empty($open)){
+					$device->open = $open;
+				}
 				
 				//filter input category with system
 				//if(Category::count("name = '{strtolower($category)}'" == 0)) {
 					//$category = '';
 				//}
-				$device->category = $category;
+				if(!empty($category)){
+					$device->category = $category;
+				}
 				
 				//for uploading device photo
 				// Check if the user has uploaded files
@@ -527,29 +551,51 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 						
 					//PetInfo: update
 					$pet_info = PetInfo::findFirst("did = '{$device->did}'");
-						
-					$pet_info->name = $pet_name;
-					$pet_info->sex = $pet_sex;
-					$pet_info->birthday = $pet_birthday;
-					$pet_info->height = $pet_height;
-					$pet_info->weight = $pet_weight;
-					$pet_info->temperament = $pet_temperament;
-					$pet_info->talents = $pet_talents;
-					$pet_info->description = $pet_description;
-					$pet_info->chip_number = $pet_chip_number;
-					$pet_info->desex = $pet_desex;
-					$pet_info->vaccine_type = $pet_vaccine_type;
-					$pet_info->bloodtype = $pet_bloodtype;
-					$pet_info->bloodbank = $pet_bloodbank;
-					$pet_info->disability = $pet_disability;
-					$pet_info->insurance = $pet_insurance;
-					$pet_info->hospital_name = $pet_hospital_name;
-					$pet_info->hospital_phone = $pet_hospital_phone;
-					$pet_info->hospital_address = $pet_hospital_address;
-					$pet_info->hospital_city = $pet_hospital_city;
-					$pet_info->hospital_district = $pet_hospital_district;
-					$pet_info->hospital_postal = $pet_hospital_postal;
-					$pet_info->hospital_country = $pet_hospital_country;
+
+					if(!empty($pet_name))
+						$pet_info->name = $pet_name;
+					if(!empty($pet_sex))
+						$pet_info->sex = $pet_sex;
+					if(!empty($pet_birthday))
+						$pet_info->birthday = $pet_birthday;
+					if(!empty($pet_height))
+						$pet_info->height = $pet_height;
+					if(!empty($pet_weight))
+						$pet_info->weight = $pet_weight;
+					if(!empty($pet_temperament))
+						$pet_info->temperament = $pet_temperament;
+					if(!empty($pet_talents))
+						$pet_info->talents = $pet_talents;
+					if(!empty($pet_description))
+						$pet_info->description = $pet_description;
+					if(!empty($pet_chip_number))
+						$pet_info->chip_number = $pet_chip_number;
+					if(!empty($pet_desex))
+						$pet_info->desex = $pet_desex;
+					if(!empty($pet_vaccine_type))
+						$pet_info->vaccine_type = $pet_vaccine_type;
+					if(!empty($pet_bloodtype))
+						$pet_info->bloodtype = $pet_bloodtype;
+					if(!empty($pet_bloodbank))
+						$pet_info->bloodbank = $pet_bloodbank;
+					if(!empty($pet_disability))
+						$pet_info->disability = $pet_disability;
+					if(!empty($$pet_insurance))
+						$pet_info->insurance = $pet_insurance;
+					if(!empty($pet_hospital_name))
+						$pet_info->hospital_name = $pet_hospital_name;
+					if(!empty($pet_hospital_phone))
+						$pet_info->hospital_phone = $pet_hospital_phone;
+					if(!empty($pet_hospital_address))
+						$pet_info->hospital_address = $pet_hospital_address;
+					if(!empty($pet_hospital_city))
+						$pet_info->hospital_city = $pet_hospital_city;
+					if(!empty($pet_hospital_district))
+						$pet_info->hospital_district = $pet_hospital_district;
+					if(!empty($pet_hospital_postal))
+						$pet_info->hospital_postal = $pet_hospital_postal;
+					if(!empty($pet_hospital_country))
+						$pet_info->hospital_country = $pet_hospital_country;
 
 					$pet_info->update();						
 				}
@@ -557,25 +603,43 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 						
 					//HumanInfo: update
 					$human_info = HumanInfo::findFirst("did = '{$device->did}'");
-						
-					$human_info->firstname = $human_firstname;
-					$human_info->lasname = $human_lastname;
-					$human_info->nickname = $human_nickname;
-					$human_info->sex = $human_sex;
-					$human_info->birthday = $human_birthday;
-					$human_info->height = $human_height;
-					$human_info->weight = $human_weight;
-					$human_info->bloodtype = $human_bloodtype;
-					$human_info->disease = $human_disease;
-					$human_info->disability = $human_disability;
-					$human_info->medications = $human_medications;
-					$human_info->hospital_name = $human_hospital_name;
-					$human_info->hospital_phone = $human_hospital_phone;
-					$human_info->hospital_address = $human_hospital_address;
-					$human_info->hospital_city = $human_hospital_city;
-					$human_info->hospital_district = $human_hospital_district;
-					$human_info->hospital_postal = $human_hospital_postal;
-					$human_info->hospital_country = $human_hospital_country;
+
+					if(!empty($human_firstname))
+						$human_info->firstname = $human_firstname;
+					if(!empty($human_lastname))
+						$human_info->lasname = $human_lastname;
+					if(!empty($human_nickname))
+						$human_info->nickname = $human_nickname;
+					if(!empty($human_sex))
+						$human_info->sex = $human_sex;
+					if(!empty($human_birthday))
+						$human_info->birthday = $human_birthday;
+					if(!empty($human_height))
+						$human_info->height = $human_height;
+					if(!empty($human_weight))
+						$human_info->weight = $human_weight;
+					if(!empty($human_bloodtype))
+						$human_info->bloodtype = $human_bloodtype;
+					if(!empty($human_disease))
+						$human_info->disease = $human_disease;
+					if(!empty($human_disability))
+						$human_info->disability = $human_disability;
+					if(!empty($human_medications))
+						$human_info->medications = $human_medications;
+					if(!empty($human_hospital_name))
+						$human_info->hospital_name = $human_hospital_name;
+					if(!empty($human_hospital_phone))
+						$human_info->hospital_phone = $human_hospital_phone;
+					if(!empty($human_hospital_address))
+						$human_info->hospital_address = $human_hospital_address;
+					if(!empty($human_hospital_city))
+						$human_info->hospital_city = $human_hospital_city;
+					if(!empty($human_hospital_district))
+						$human_info->hospital_district = $human_hospital_district;
+					if(!empty($human_hospital_postal))
+						$human_info->hospital_postal = $human_hospital_postal;
+					if(!empty($human_hospital_country))
+						$human_info->hospital_country = $human_hospital_country;
 
 					$human_info->update();
 				}
@@ -584,8 +648,10 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 					//ValuableInfo: update
 					$valuable_info = ValuableInfo::findFirst("did = '{$device->did}'");
 				
-					$valuable_info->name = $valuable_name;
-					$valuable_info->description = $valuable_description;
+					if(!empty($valuable_name))
+						$valuable_info->name = $valuable_name;
+					if(!empty($valuable_description))
+						$valuable_info->description = $valuable_description;
 						
 					$valuable_info->update();
 				}
