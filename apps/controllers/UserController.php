@@ -231,21 +231,21 @@ class UserController extends \Phalcon\Mvc\Controller {
 	
 	public function updateAction(){
 		
-		$fullname = isset($this->_request->getPost('fullname'));
-		$firstname = isset($this->_request->getPost('firstname'));
-		$lastname = isset($this->_request->getPost('lastname'));
-		$address = isset($this->_request->getPost('address'));
-		$phone = isset($this->_request->getPost('phone'));
-		$nickname = isset($this->_request->getPost('nickname'));
-		$birthday = isset($this->_request->getPost('birthday'));
-		$sex = isset($this->_request->getPost('sex'));
-		$photo = isset($this->_request->getPost('photo'));
+		$fullname = $this->_request->getPost('fullname');
+		$firstname = $this->_request->getPost('firstname');
+		$lastname = $this->_request->getPost('lastname');
+		$address = $this->_request->getPost('address');
+		$phone = $this->_request->getPost('phone');
+		$nickname = $this->_request->getPost('nickname');
+		$birthday = $this->_request->getPost('birthday');
+		$sex = $this->_request->getPost('sex');
+		$photo = $this->_request->getPost('photo');
 		//$photo = "";
 		
-		$city = isset($this->_request->getPost('city'));
-		$district = isset($this->_request->getPost('district'));
-		$postal = isset($this->_request->getPost('postal'));
-		$country = isset($this->_request->getPost('country'));
+		$city = $this->_request->getPost('city');
+		$district = $this->_request->getPost('district');
+		$postal = $this->_request->getPost('postal');
+		$country = $this->_request->getPost('country');
 		
 		$user_info = array("fullname" => $fullname, "address" => $address, "phone" => $phone, "nickname" => $nickname,
 							"birthday" => $birthday , "sex" => $sex, "photo" => $photo);

@@ -18,8 +18,8 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 	public function initialize() {		
 		$this->_request = new \Phalcon\Http\Request();
 		
-		$this->view->disable();
-		$this->response->setContentType('application/json', 'UTF-8');
+		//$this->view->disable();
+		//$this->response->setContentType('application/json', 'UTF-8');
 		$this->_imei = $this->_request->getPost('imei');
 		$this->_token = $this->_request->getPost('token');
 		$this->_email = strtolower($this->_request->getPost('email'));
@@ -196,9 +196,9 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 		
 		$serial_number = strtoupper($this->_request->getPost('serial_number'));
 		
-		$latitude = isset($this->_request->getPost('latitude'));
-		$longitude = isset($this->_request->getPost('longitude'));
-		$battery_status = isset($this->_request->getPost('battery_status'));
+		$latitude = $this->_request->getPost('latitude');
+		$longitude = $this->_request->getPost('longitude');
+		$battery_status = $this->_request->getPost('battery_status');
 		
 		$device_message = array("latitude" => $latitude, 'longitude' => $longitude, 'battery_status' => $battery_status);
 		
@@ -290,64 +290,64 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 	}
 
 	public function updateAction(){
-		$category = isset($this->_request->getPost('category'));
-		$status = isset(strtolower($this->_request->getPost('status')));
+		$category = $this->_request->getPost('category');
+		$status = strtolower($this->_request->getPost('status'));
 		//$type = $this->_request->getPost('type');
-		$name = isset($this->_request->getPost('name'));
+		$name = $this->_request->getPost('name');
 		//$photo = $this->_request->getPost('photo');
 		$photo = "";
-		$message = isset($this->_request->getPost('message'));
-		$serial_number = isset(strtoupper($this->_request->getPost('serial_number')));
+		$message = $this->_request->getPost('message');
+		$serial_number = strtoupper($this->_request->getPost('serial_number'));
 		//$expiry_date = "2015-12-30";
-		$open = isset(strtolower($this->_request->getPost('open')));
+		$open = strtolower($this->_request->getPost('open'));
 		
 		//for updating pet...
-		$pet_name = isset($this->_request->getPost('pet_name'));
-		$pet_sex = isset($this->_request->getPost('pet_sex'));
-		$pet_birthday = isset($this->_request->getPost('pet_birthday'));
-		$pet_height = isset($this->_request->getPost('pet_height'));
-		$pet_weight = isset($this->_request->getPost('pet_weight'));
-		$pet_temperament = isset($this->_request->getPost('pet_temperament'));
-		$pet_talents = isset($this->_request->getPost('pet_talents'));
-		$pet_description = isset($this->_request->getPost('pet_description'));
-		$pet_chip_number = isset($this->_request->getPost('pet_chip_number'));
-		$pet_desex = isset($this->_request->getPost('pet_desex'));
-		$pet_vaccine_type = isset($this->_request->getPost('pet_vaccine_type'));
-		$pet_bloodtype = isset($this->_request->getPost('pet_bloodtype'));
-		$pet_bloodbank = isset($this->_request->getPost('pet_bloodbank'));
-		$pet_disability = isset($this->_request->getPost('pet_disability'));
-		$pet_insurance = isset($this->_request->getPost('pet_insurance'));
-		$pet_hospital_name = isset($this->_request->getPost('pet_hospital_name'));
-		$pet_hospital_phone = isset($this->_request->getPost('pet_hospital_phone'));
-		$pet_hospital_address = isset($this->_request->getPost('pet_hospital_address'));
-		$pet_hospital_city = isset($this->_request->getPost('pet_hospital_city'));
-		$pet_hospital_district = isset($this->_request->getPost('pet_hospital_district'));
-		$pet_hospital_postal = isset($this->_request->getPost('pet_hospital_postal'));
-		$pet_hospital_country = isset($this->_request->getPost('pet_hospital_country'));
+		$pet_name = $this->_request->getPost('pet_name');
+		$pet_sex = $this->_request->getPost('pet_sex');
+		$pet_birthday = $this->_request->getPost('pet_birthday');
+		$pet_height = $this->_request->getPost('pet_height');
+		$pet_weight = $this->_request->getPost('pet_weight');
+		$pet_temperament = $this->_request->getPost('pet_temperament');
+		$pet_talents = $this->_request->getPost('pet_talents');
+		$pet_description = $this->_request->getPost('pet_description');
+		$pet_chip_number = $this->_request->getPost('pet_chip_number');
+		$pet_desex = $this->_request->getPost('pet_desex');
+		$pet_vaccine_type = $this->_request->getPost('pet_vaccine_type');
+		$pet_bloodtype = $this->_request->getPost('pet_bloodtype');
+		$pet_bloodbank = $this->_request->getPost('pet_bloodbank');
+		$pet_disability = $this->_request->getPost('pet_disability');
+		$pet_insurance = $this->_request->getPost('pet_insurance');
+		$pet_hospital_name = $this->_request->getPost('pet_hospital_name');
+		$pet_hospital_phone = $this->_request->getPost('pet_hospital_phone');
+		$pet_hospital_address = $this->_request->getPost('pet_hospital_address');
+		$pet_hospital_city = $this->_request->getPost('pet_hospital_city');
+		$pet_hospital_district = $this->_request->getPost('pet_hospital_district');
+		$pet_hospital_postal = $this->_request->getPost('pet_hospital_postal');
+		$pet_hospital_country = $this->_request->getPost('pet_hospital_country');
 		
 		//for updating human...
-		$human_firstname = isset($this->_request->getPost('human_firstname'));
-		$human_lastname = isset($this->_request->getPost('human_lastname'));
-		$human_nickname = isset($this->_request->getPost('human_nickname'));
-		$human_sex = isset($this->_request->getPost('human_sex'));
-		$human_birthday = isset($this->_request->getPost('human_birthday'));
-		$human_height = isset($this->_request->getPost('human_height'));
-		$human_weight = isset($this->_request->getPost('human_weight'));
-		$human_bloodtype = isset($this->_request->getPost('human_bloodtype'));
-		$human_disease = isset($this->_request->getPost('human_disease'));
-		$human_disability = isset($this->_request->getPost('human_disability'));
-		$human_medications = isset($this->_request->getPost('human_medications'));
-		$human_hospital_name = isset($this->_request->getPost('human_hospital_name'));
-		$human_hospital_phone = isset($this->_request->getPost('human_hospital_phone'));
-		$human_hospital_address = isset($this->_request->getPost('human_hospital_address'));
-		$human_hospital_city = isset($this->_request->getPost('human_hospital_city'));
-		$human_hospital_district = isset($this->_request->getPost('human_hospital_district'));
-		$human_hospital_postal = isset($this->_request->getPost('human_hospital_postal'));
-		$human_hospital_country = isset($this->_request->getPost('human_hospital_country'));
+		$human_firstname = $this->_request->getPost('human_firstname');
+		$human_lastname = $this->_request->getPost('human_lastname');
+		$human_nickname = $this->_request->getPost('human_nickname');
+		$human_sex = $this->_request->getPost('human_sex');
+		$human_birthday = $this->_request->getPost('human_birthday');
+		$human_height = $this->_request->getPost('human_height');
+		$human_weight = $this->_request->getPost('human_weight');
+		$human_bloodtype = $this->_request->getPost('human_bloodtype');
+		$human_disease = $this->_request->getPost('human_disease');
+		$human_disability = $this->_request->getPost('human_disability');
+		$human_medications = $this->_request->getPost('human_medications');
+		$human_hospital_name = $this->_request->getPost('human_hospital_name');
+		$human_hospital_phone = $this->_request->getPost('human_hospital_phone');
+		$human_hospital_address = $this->_request->getPost('human_hospital_address');
+		$human_hospital_city = $this->_request->getPost('human_hospital_city');
+		$human_hospital_district = $this->_request->getPost('human_hospital_district');
+		$human_hospital_postal = $this->_request->getPost('human_hospital_postal');
+		$human_hospital_country = $this->_request->getPost('human_hospital_country');
 		
 		//for updating valuable...
-		$valuable_name = isset($this->_request->getPost('valuable_name'));
-		$valuable_description = isset($this->_request->getPost('valuable_description'));
+		$valuable_name = $this->_request->getPost('valuable_name');
+		$valuable_description = $this->_request->getPost('valuable_description');
 		
 		//find 'type'-P,M,T,A from first letter of serial number
 		$type = null;
@@ -1318,7 +1318,7 @@ EOTl
 		}
 	}
 	
-private function _send_android_notification($msg, $sn, $token) {
+	private function _send_android_notification($msg, $sn, $token) {
 		// API access key from Google API's Console
 		define( 'API_ACCESS_KEY', 'AIzaSyDfmE5CeBGdP9eCVMbhykDkZ0jBaMS9mBM' );
 		
@@ -1366,7 +1366,43 @@ private function _send_android_notification($msg, $sn, $token) {
 	}
 	
 	public function indexAction() {
+	}
 	
+	public function pushAction() {
+		
+		$id = $this->_request->get('id');
+		
+		$msg = Bulletin::findFirst("id = {$id}");
+		
+		$device_list = Device::find("status = 'normal' and sso_id is not null GROUP BY sso_id");
+
+		foreach($device_list as $device) {
+			
+			//$mobiles = Mobile::find("sso_id = '{$device->sso_id}' and token is not null and token != ''");
+			$mobiles = Mobile::find(array("conditions" => "sso_id = '{$device->sso_id}' and token is not null and token != ''", "order" => "mid desc"));
+		
+			if(!empty($mobiles)) {
+				
+				$android_send = "N";
+				$apple_send = "N";
+				foreach($mobiles as $mobile) {
+					
+					if($android_send == 'N') {
+						echo $mobile->token;
+						echo $device->serial_number;
+						echo $msg->message;
+						//$android_send  = $this->_send_android_notification($msg, $device->$serial_number, $mobile->token);
+					}
+						
+					if($apple_send == "N") {
+						//$apple_send = $this->_send_apple_notification($msg, $device->$serial_number, $mobile->token);
+						echo $mobile->token;
+						echo $device->serial_number;
+						echo $msg->message;
+					}
+				}
+			}
+		}
 	}
 	
 	/*
