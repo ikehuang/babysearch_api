@@ -18,8 +18,8 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 	public function initialize() {		
 		$this->_request = new \Phalcon\Http\Request();
 		
-		//$this->view->disable();
-		//$this->response->setContentType('application/json', 'UTF-8');
+		$this->view->disable();
+		$this->response->setContentType('application/json', 'UTF-8');
 		$this->_imei = $this->_request->getPost('imei');
 		$this->_token = $this->_request->getPost('token');
 		$this->_email = strtolower($this->_request->getPost('email'));
@@ -256,9 +256,9 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 				
 					//push notifications when device status lost
 					if(!empty($device->name))
-						$msg = '有人發現 "' . $device->name . '"';
+						$msg = '??人發??"' . $device->name . '"';
 					else
-						$msg = '有人發現 "' . substr($serial_number, 3, 14) . '"';
+						$msg = '?�人?�現 "' . substr($serial_number, 3, 14) . '"';
 				
 					if((empty($_SESSION))) {
 						
@@ -529,15 +529,15 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 						($upload->moveTo($path)) ? $isUploaded = true : $isUploaded = false;
 						
 						if($isUploaded) {
-							if(preg_match("/photo/",$upload->getKey())) {
+							//if(preg_match("/photo/",$upload->getKey())) {
 						
 								//strip from input key(eg.photos.1) to get id
-								$newkey = preg_replace("/^photos./","",$upload->getKey());
+								//$newkey = preg_replace("/^photos./","",$upload->getKey());
 						
 								$device->photo = "http://{$_SERVER['HTTP_HOST']}/".$path;
 								
 								$photo = $device->photo;
-							}
+							//}
 						}
 					}
 				}

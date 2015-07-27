@@ -268,7 +268,6 @@ class UserController extends \Phalcon\Mvc\Controller {
 		//$birthday = '1990-03-03';
 		//$sex = 'M';
 		//$photo = 'clamdowndklf.png';
-		
 		//if api_key match, continue...; otherwise, return fail
 		if($this->_api_key == $this->_apikey) {
 			
@@ -317,21 +316,14 @@ class UserController extends \Phalcon\Mvc\Controller {
 					$isUploaded = false;
 						
 					foreach($uploads as $upload){
-							
 						//Move the file into the application
 						$path = 'upload/'.md5(uniqid(rand(), true)).'-'.strtolower($upload->getname());
 						($upload->moveTo($path)) ? $isUploaded = true : $isUploaded = false;
 				
 						if($isUploaded) {
-							if(preg_match("/photo/",$upload->getKey())) {
-				
-								//strip from input key(eg.photos.1) to get id
-								$newkey = preg_replace("/^photos./","",$upload->getKey());
-				
-								$user->photo = "http://{$_SERVER['HTTP_HOST']}/".$path;
-								
-								$photo = $user->photo;
-							}
+							$user->photo = "http://{$_SERVER['HTTP_HOST']}/".$path;
+
+							$photo = $user->photo;
 						}
 					}
 				}
