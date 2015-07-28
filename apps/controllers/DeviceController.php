@@ -256,9 +256,9 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 				
 					//push notifications when device status lost
 					if(!empty($device->name))
-						$msg = '??人發??"' . $device->name . '"';
+						$msg = '有人發現"' . $device->name . '"';
 					else
-						$msg = '?�人?�現 "' . substr($serial_number, 3, 14) . '"';
+						$msg = '有人發現 "' . substr($serial_number, 3, 14) . '"';
 				
 					if((empty($_SESSION))) {
 						
@@ -1388,17 +1388,17 @@ EOTl
 				foreach($mobiles as $mobile) {
 					
 					if($android_send == 'N') {
-						echo $mobile->token;
-						echo $device->serial_number;
-						echo $msg->message;
-						//$android_send  = $this->_send_android_notification($msg, $device->$serial_number, $mobile->token);
+						//echo $mobile->token;
+						//echo $device->serial_number;
+						//echo $msg->message;
+						$android_send  = $this->_send_android_notification($msg, $device->$serial_number, $mobile->token);
 					}
 						
 					if($apple_send == "N") {
-						//$apple_send = $this->_send_apple_notification($msg, $device->$serial_number, $mobile->token);
-						echo $mobile->token;
-						echo $device->serial_number;
-						echo $msg->message;
+						$apple_send = $this->_send_apple_notification($msg, $device->$serial_number, $mobile->token);
+						//echo $mobile->token;
+						//echo $device->serial_number;
+						//echo $msg->message;
 					}
 				}
 			}
