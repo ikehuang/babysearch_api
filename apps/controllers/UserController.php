@@ -626,6 +626,36 @@ class UserController extends \Phalcon\Mvc\Controller {
 		$this->response->send();
 	}
 	
+	public function getSSOAction() {
+		
+		$response_data = array(
+				'status' => 'fail'
+		);
+		
+		//if api_key match, continue...; otherwise, return fail
+		if($this->_api_key == $this->_apikey) {
+			
+			if(!empty($this->_email)) {
+			
+				$user = User::findFirst("email = '{$this->_email}'");
+			
+				if(!empty($user)) {
+	
+					$sso_id = $user->sso_id;
+	
+					$response_data = array(
+							'status' => 'success',
+							'sso_id' => $sso_id
+					);
+				}
+			}
+		}
+		
+		
+		$this->response->setContent(json_encode($response_data));
+		$this->response->send();
+	}
+	
 	/*
 	public function loginAction(){
 		
