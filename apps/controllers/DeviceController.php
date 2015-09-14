@@ -209,8 +209,8 @@ class DeviceController extends \Phalcon\Mvc\Controller {
 		
 		//$this->_api_key = 'qwe123';
 		//$this->_apikey = 'qwe123';
-		//$this->_email = 'ike@ink.net.tw';
-		//$serial_number = 'DB4D46XFKMX';
+		//$this->_email = 'ffc141@gmail.com';
+		//$serial_number = 'P1Q23456744CAA';
 		
 		//if api_key match, continue...; otherwise, return fail
 		if($this->_api_key == $this->_apikey) {
